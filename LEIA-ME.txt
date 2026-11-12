@@ -1,0 +1,38 @@
+MEU CONTROLE FINANCEIRO - PACOTE PARA HOSPEDAGEM GRATUITA
+
+Este pacote NAO contem seus dados financeiros. Ele abre vazio. Os dados ficam so no navegador do seu aparelho.
+
+ARQUIVOS (envie todos, na mesma pasta)
+  index.html, manifest.webmanifest, sw.js, icon-192.png, icon-512.png, icon-maskable-512.png
+
+OPCAO 1 - NETLIFY (mais facil)
+  1. Descompacte o zip.
+  2. Acesse app.netlify.com/drop e arraste a PASTA descompactada.
+  3. Crie uma conta gratuita para o site nao expirar.
+  4. Use o endereco que o Netlify mostrar (algo como nome.netlify.app).
+
+OPCAO 2 - GITHUB PAGES
+  1. Crie uma conta em github.com e um repositorio publico (ex.: controle-financeiro).
+  2. Add file > Upload files: envie os 6 arquivos > Commit changes.
+  3. Settings > Pages > Source: "Deploy from a branch" > Branch: main, pasta / (root) > Save.
+  4. Em ~1 minuto: https://SEU-USUARIO.github.io/controle-financeiro/
+
+OPCAO 3 - CLOUDFLARE PAGES
+  1. Crie uma conta em dash.cloudflare.com.
+  2. Workers & Pages > Create > Pages > Upload assets.
+  3. De um nome ao projeto, envie a pasta ou o zip, e clique em Deploy.
+  4. Endereco: nome.pages.dev
+
+INSTALAR NO CELULAR (Chrome)
+  Abra o endereco > menu (tres pontos) > "Instalar app" (ou "Adicionar a tela inicial").
+INSTALAR NO COMPUTADOR (Chrome)
+  Abra o endereco > icone de instalar na barra de enderecos.
+
+TRAZER SEUS DADOS DO APP ATUAL
+  1. No app atual (link do Claude): aba Contas > Gerar codigo > copie o codigo.
+  2. No app instalado: aba Contas > cole o codigo > Carregar codigo.
+  Esse codigo contem seus dados financeiros: cole so nos seus aparelhos e nao publique.
+
+LIMITES
+  - Sem sincronizacao automatica: cada aparelho guarda seus dados. Use o codigo de backup para copiar de um para o outro.
+  - Limpar os dados do navegador apaga o app. Guarde um codigo de backup.
