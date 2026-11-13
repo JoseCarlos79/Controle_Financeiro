@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Meu controle financeiro</title>
 <link rel="manifest" href="manifest.webmanifest">
+<script src="firebase-config.js"></script>
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -61,7 +62,7 @@ input[type=range]{width:100%;padding:0;border:0;accent-color:var(--ac)}
 #toast{position:fixed;left:50%;transform:translateX(-50%) translateY(12px);bottom:90px;width:min(520px,calc(100% - 32px));background:var(--card);border-radius:14px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:.25s;z-index:6}#toast.show{opacity:1;transform:translateX(-50%)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 .micb{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--ac);color:var(--ac);text-align:center;font-size:17px;flex:none}.rec{background:var(--neg)!important;color:#fff!important;border-color:var(--neg)!important}
-.sync{width:28px;height:28px;border-radius:50%;text-align:center;font-size:15px;color:var(--mut);flex:none}.sync.ok{color:var(--pos)}.sync.busy{color:#e0a020}.sync.err,.sync.full{color:var(--neg)}
+.sync{width:28px;height:28px;border-radius:50%;text-align:center;font-size:15px;color:var(--mut);flex:none}.sync.ok{color:var(--pos)}.sync.busy{color:#e0a020}.sync.err,.sync.full{color:var(--neg)}.sync.login{color:#e0a020}
 .fab.mic{bottom:calc(86px + env(safe-area-inset-bottom,0px));background:var(--card);color:var(--ac);border:2px solid var(--ac);font-size:24px;line-height:52px}
 @media(max-width:430px){.tt{display:none}}
 </style>
@@ -73,7 +74,7 @@ input[type=range]{width:100%;padding:0;border:0;accent-color:var(--ac)}
 <button class="fab mic" onclick="micGo()" aria-label="Lançar por voz" title="Lançar por voz">🎤</button>
 <button class="fab" onclick="openSheet()" aria-label="Novo lançamento" title="Novo lançamento">+</button>
 <script>
-let ref=null,pt=null,syncState='busy',dict=null,dictOn=false,syncWhy='',lastSync=0,tries=0,hideBanner=false;const DEV=Math.random().toString(36).slice(2);
+let ref=null,pt=null,syncState='busy',dict=null,dictOn=false,syncWhy='',userEmail='',FB=null,AUTH=null,fbReady=false,unsubFB=null,lastSync=0,tries=0,hideBanner=false;const DEV=Math.random().toString(36).slice(2);
 const CATS=['Moradia','Alimentação','Transporte','Lazer','Saúde','Assinaturas','Compras','Financiamentos','Juros e tarifas','Transferências','Outros','Renda','Entre contas'];
 const COL=['#14c19a','#3b82e6','#e9d44c','#c44fd0','#f2456f','#ff9f43','#6c7bd9','#8a63d2','#d6402f','#4aa3b8','#9aa5a0','#0f8a5f','#c7ccc9'];
 const NEU='Entre contas',EXP=CATS.filter(c=>c!==NEU&&c!=='Renda'),JT='Juros e tarifas';
@@ -274,7 +275,7 @@ function vContas(){
   return`<small>Em aberto</small><div class="hero">${fmt(open.reduce((s,b)=>s+b.v,0))}</div><small>${late.length?`${late.length} vencida(s), somando ${fmt(late.reduce((s,b)=>s+b.v,0))}`:'Nenhuma vencida'}. Toque no círculo para marcar como pago.</small>
   <h2>Contas a pagar</h2>${rows}<small>As faturas de cartão aparecem como “confirmar”, pois os extratos não mostram se foram pagas.</small>
   <h2>Dívidas</h2><details><summary>Total no ${CF().ref||'cadastro'}: ${fmt(tot)}</summary>${CF().debts.map(x=>`<div class="row"><span>${x[0]}</span><b>${fmt(x[1])}</b></div>`).join('')}<small>${esc(CF().taxas||'')} Rotativo e cheque especial custam mais por mês, então costumam ser a prioridade em renegociações. Não é recomendação financeira.</small></details>
-  <details open><summary>Sincronização e backup</summary><small id="syncmsg">${syncMsg()}</small> <button class="link" onclick="syncNow()">Sincronizar agora</button><br><small>Backup manual: gere o código, copie e cole em outro aparelho.</small><textarea id="bk" rows="2" style="width:100%;margin:8px 0" aria-label="Código de backup"></textarea><div class="row"><button class="link" onclick="exportCode()">Gerar código</button><button class="link" onclick="importCode()">Carregar código</button></div><small id="bkm"></small><div class="row" style="margin-top:10px"><button class="link" style="color:var(--neg)" onclick="askZero()">Zerar gastos…</button><button class="link neg" onclick="reset(false)">Apagar tudo</button></div></details>`;
+  <details open><summary>Sincronização e backup</summary><small id="syncmsg">${syncMsg()}</small> ${syncState==='login'?'<button class="link" onclick="signIn()">Entrar com Google</button> ':''}<button class="link" onclick="syncNow()">Sincronizar agora</button> ${userEmail?'<button class="link" onclick="signOutNow()">Sair da conta</button>':''}<br><small>Backup manual: gere o código, copie e cole em outro aparelho.</small><textarea id="bk" rows="2" style="width:100%;margin:8px 0" aria-label="Código de backup"></textarea><div class="row"><button class="link" onclick="exportCode()">Gerar código</button><button class="link" onclick="importCode()">Carregar código</button><label class="link" style="cursor:pointer">Carregar arquivo<input type="file" accept=".json,.txt,application/json,text/plain" onchange="importFile(this)" hidden></label></div><small id="bkm"></small><div class="row" style="margin-top:10px"><button class="link" style="color:var(--neg)" onclick="askZero()">Zerar gastos…</button><button class="link neg" onclick="reset(false)">Apagar tudo</button></div></details>`;
 }
 const V={visao:vVisao,plano:vPlano,mov:vMov,fixos:vFixos,contas:vContas};
 function render(){
@@ -378,7 +379,7 @@ function listen(){
 }
 
 /* Sincronização e voz */
-const SYNCT={off:'Versão instalada: os dados ficam só neste aparelho. Use o backup por código para levar ao outro aparelho.',busy:'Sincronizando…',ok:'Sincronizado entre os seus aparelhos.',err:'Erro ao sincronizar. Os dados continuam salvos neste aparelho.',full:'Limite de armazenamento atingido. Dados só neste aparelho.'};
+const SYNCT={off:'Sincronização não configurada: preencha o arquivo firebase-config.js (veja o LEIA-ME). Por enquanto os dados ficam só neste aparelho.',login:'Entre com a sua conta Google para sincronizar entre os seus aparelhos.',busy:'Sincronizando…',ok:'Sincronizado entre os seus aparelhos.',err:'Erro ao sincronizar. Os dados continuam salvos neste aparelho.',full:'Limite de armazenamento atingido. Dados só neste aparelho.'};
 
 const wt=(p,ms=10000)=>Promise.race([p,new Promise(r=>setTimeout(()=>r(null),ms))]);
 function setSync(s){syncState=s;const b=$('#syncb');if(b){b.className='sync '+s;b.title=SYNCT[s];b.setAttribute('aria-label',SYNCT[s])}const m=$('#syncmsg');if(m)m.textContent=SYNCT[s]}
@@ -391,18 +392,43 @@ function adopt(d){
     try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}render();
   }catch(e){}
 }
+const FBV='10.12.2',FBU=m=>`https://www.gstatic.com/firebasejs/${FBV}/firebase-${m}.js`;
+async function loadFB(){const [a,au,fs]=await Promise.all([import(FBU('app')),import(FBU('auth')),import(FBU('firestore'))]);return{...a,...au,...fs}}
+const fbErr=e=>{const c=(e&&e.code)||'';return c==='auth/unauthorized-domain'?'este endereço não está autorizado no Firebase (Authentication > Settings > Authorized domains).':c==='permission-denied'?'as regras do Firestore negaram o acesso. Confira o e-mail nas regras.':c==='auth/popup-closed-by-user'?'login cancelado.':'erro: '+(c||(e&&e.message)||'desconhecido')};
+async function push(){try{await ref.set({json:JSON.stringify(S),ts:S.ts||Date.now(),by:DEV});syncWhy='';setSync('ok')}catch(e){syncWhy=fbErr(e);setSync('err');render()}}
 async function initSync(){
+  if(fbReady)return;tries++;
+  const cfg=window.FIREBASE_CONFIG;
+  if(!cfg||!cfg.apiKey){syncWhy='';setSync('off');return}
   try{
-    const C=window.claude;if(!C||!C.use){setSync('off');return}
-    const [db,user]=await Promise.all([wt(C.use('db')),wt(C.use('user'))]);
-    if(!db||!user||!user.id){setSync('off');return}
-    const id=await user.id();ref=db.doc('data/users/'+id+'/finance');
-    const snap=await ref.get(),d=snap.exists?snap.data():null;
-    if(d&&d.json&&(d.ts||0)>(S.ts||0))adopt(d);else await push();
-    ref.onSnapshot(s=>{if(!s.exists)return;const x=s.data();if(x&&x.json&&x.by!==DEV&&(x.ts||0)>(S.ts||0))adopt(x)},()=>setSync('err'));
-    setSync('ok');
-  }catch(e){ref=null;setSync('err')}
+    FB=await wt(loadFB(),15000);
+    if(!FB){syncWhy='não foi possível carregar o Firebase (sem internet?).';setSync('err');return}
+    fbReady=true;const app=FB.initializeApp(cfg);AUTH=FB.getAuth(app);const db=FB.getFirestore(app);
+    FB.onAuthStateChanged(AUTH,async u=>{
+      if(!u){ref=null;userEmail='';if(unsubFB){unsubFB();unsubFB=null}setSync('login');render();return}
+      userEmail=u.email||'';
+      const dref=FB.doc(db,'users',u.uid,'state','finance');
+      ref={get:async()=>{const s=await FB.getDoc(dref);return{exists:s.exists(),data:()=>s.data()}},set:d=>FB.setDoc(dref,d),onSnapshot:(cb,er)=>FB.onSnapshot(dref,s=>cb({exists:s.exists(),data:()=>s.data()}),er)};
+      try{
+        const snap=await ref.get(),d=snap.exists?snap.data():null;
+        if(d&&d.json){if(applyRemote(d))await push()}else await push();
+        if(unsubFB)unsubFB();
+        unsubFB=ref.onSnapshot(s=>{if(!s.exists)return;const x=s.data();if(x&&x.json&&x.by!==DEV&&applyRemote(x))schedulePush()},e=>{syncWhy=fbErr(e);setSync('err');render()});
+        syncWhy='';setSync('ok');render();
+      }catch(e){syncWhy=fbErr(e);setSync('err');render()}
+    },e=>{syncWhy=fbErr(e);setSync('err');render()});
+  }catch(e){fbReady=false;syncWhy=fbErr(e);setSync('err')}
 }
+async function signIn(){
+  if(!FB||!AUTH)return;const p=new FB.GoogleAuthProvider();
+  try{await FB.signInWithPopup(AUTH,p)}catch(e){
+    const c=(e&&e.code)||'';
+    if(c==='auth/popup-blocked'||c==='auth/operation-not-supported-in-this-environment'){try{await FB.signInWithRedirect(AUTH,p)}catch(x){syncWhy=fbErr(x);setSync('err');render()}}
+    else if(c!=='auth/cancelled-popup-request'){syncWhy=fbErr(e);setSync('login');render()}
+  }
+}
+async function signOutNow(){if(AUTH&&FB){try{await FB.signOut(AUTH)}catch(e){}}}
+if(window.addEventListener)window.addEventListener('online',()=>{if(ref)syncNow()});
 function syncNow(){if(!ref){initSync();return}setSync('busy');push()}
 async function initDict(){
   try{const C=window.claude;if(!C||!C.use)return;const d=await wt(C.use('dictation'));if(!d)return;dict=d;
@@ -455,7 +481,7 @@ async function initDict(){
 
 /* Sincronização v2: mescla por id, diagnóstico visível e zerar gastos */
 function uid(){return Date.now()*1000+Math.floor(Math.random()*1000)}
-const syncMsg=()=>SYNCT[syncState]+(syncWhy?' Motivo: '+esc(syncWhy):'')+(lastSync?' Última sincronização: '+new Date(lastSync).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'.':'');
+const syncMsg=()=>SYNCT[syncState]+(userEmail?' Conta: '+esc(userEmail)+'.':'')+(syncWhy?' Motivo: '+esc(syncWhy):'')+(lastSync?' Última sincronização: '+new Date(lastSync).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'.':'');
 function setSync(s){syncState=s;if(s==='ok')lastSync=Date.now();const b=$('#syncb');if(b){b.className='sync '+s;b.title=SYNCT[s];b.setAttribute('aria-label',SYNCT[s])}const m=$('#syncmsg');if(m)m.innerHTML=syncMsg()}
 function mergeS(a,b){
   const bn=(b.ts||0)>(a.ts||0),nw=bn?b:a,od=bn?a:b;
@@ -480,28 +506,15 @@ function applyRemote(d){
   }
   return need;
 }
-async function initSync(){
-  tries++;
-  try{
-    const C=window.claude;
-    if(!C||!C.use){syncWhy='';setSync('off');return}
-    const [db,user]=await Promise.all([wt(C.use('db')),wt(C.use('user'))]);
-    if(!db||!user||!user.id){syncWhy='o Claude não liberou o armazenamento nesta visualização (db/user indisponíveis). Confira se está logado na mesma conta.';setSync('off');return}
-    const id=await user.id();ref=db.doc('data/users/'+id+'/finance');
-    const snap=await ref.get(),d=snap.exists?snap.data():null;
-    if(d&&d.json){if(applyRemote(d))await push()}else await push();
-    ref.onSnapshot(s=>{if(!s.exists)return;const x=s.data();if(x&&x.json&&x.by!==DEV&&applyRemote(x))schedulePush()},e=>{syncWhy='erro ao receber mudanças: '+((e&&e.code)||'');setSync('err')});
-    syncWhy='';setSync('ok');
-  }catch(e){ref=null;syncWhy='erro: '+((e&&(e.code||e.message))||'desconhecido');setSync('err')}
-}
 function syncNow(){
-  if(!ref){tries=0;initSync();return}
+  if(!ref){if(syncState==='login'){signIn();return}tries=0;initSync();return}
   setSync('busy');
   ref.get().then(s=>{const d=s.exists?s.data():null;if(d&&d.json)applyRemote(d);return push()}).catch(e=>{syncWhy='erro: '+((e&&e.code)||'');setSync('err')});
 }
 function syncBanner(){
-  if(true||syncState==='ok'||syncState==='busy'||hideBanner)return'';
-  return`<div class="card" style="margin-bottom:14px;border-color:var(--neg)"><b>☁ Sem sincronização neste aparelho</b><p class="mut" style="margin:6px 0 10px;font-size:13px">${esc(syncWhy||SYNCT[syncState])} Os lançamentos ficam salvos só aqui até a sincronização voltar.</p><div style="display:flex;gap:16px;flex-wrap:wrap"><button class="link" onclick="syncNow()">Tentar de novo</button><button class="link" onclick="go('contas')">Levar dados ao outro aparelho</button><button class="link mut-l" onclick="hideBanner=true;try{localStorage.setItem('fin-nosync-hide','1')}catch(e){}render()">Ocultar</button></div></div>`;
+  if(syncState==='ok'||syncState==='busy'||hideBanner)return'';
+  const login=syncState==='login';
+  return`<div class="card" style="margin-bottom:14px;border-color:var(--${login?'ac':'neg'})"><b>☁ ${login?'Entre para sincronizar':'Sem sincronização neste aparelho'}</b><p class="mut" style="margin:6px 0 10px;font-size:13px">${esc(login?SYNCT.login:(syncWhy||SYNCT[syncState]))}</p><div style="display:flex;gap:16px;flex-wrap:wrap">${login?'<button class="link" onclick="signIn()">Entrar com Google</button>':'<button class="link" onclick="syncNow()">Tentar de novo</button>'}<button class="link mut-l" onclick="hideBanner=true;render()">Ocultar</button></div></div>`;
 }
 try{hideBanner=localStorage.getItem('fin-nosync-hide')==='1'}catch(e){}
 setInterval(()=>{if(!ref&&tries<8)initSync()},20000);
@@ -531,6 +544,8 @@ function reset(demo){
 }
 
 function welcome(){return(!S.tx.length&&!S.rules.length)?`<div class="card" style="margin-bottom:14px"><b>Bem-vindo!</b><p class="mut" style="margin:6px 0 0;font-size:13px">Comece tocando em <b>+</b> para lançar um gasto ou uma entrada. Para trazer os dados do outro app: abra o app antigo, vá em Contas, toque em Gerar código e copie. Aqui, vá em Contas, cole o código e toque em Carregar código.</p></div>`:''}
+
+function importFile(inp){const f=inp.files&&inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('#bk').value=String(r.result);importCode()};r.readAsText(f)}
 
 render();
 initSync();initDict();

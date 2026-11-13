@@ -1,38 +1,59 @@
-MEU CONTROLE FINANCEIRO - PACOTE PARA HOSPEDAGEM GRATUITA
+MEU CONTROLE FINANCEIRO - VERSAO COM SINCRONIZACAO (GitHub Pages + Firebase)
 
-Este pacote NAO contem seus dados financeiros. Ele abre vazio. Os dados ficam so no navegador do seu aparelho.
+COMO FUNCIONA
+  - O app fica no GitHub Pages (site publico, mas SEM nenhum dado seu).
+  - Seus dados ficam no Firebase (Firestore), protegidos por login Google e por regras
+    que so liberam a leitura e a escrita para o SEU e-mail.
+  - Celular e computador mostram os mesmos dados.
+  - Custo: plano Spark do Firebase, que nao pede cartao. Este app usa muito menos que a cota gratuita.
 
-ARQUIVOS (envie todos, na mesma pasta)
-  index.html, manifest.webmanifest, sw.js, icon-192.png, icon-512.png, icon-maskable-512.png
+ARQUIVOS (envie todos para a raiz do repositorio do GitHub)
+  index.html, firebase-config.js, manifest.webmanifest, sw.js, icon-192.png, icon-512.png, icon-maskable-512.png
 
-OPCAO 1 - NETLIFY (mais facil)
-  1. Descompacte o zip.
-  2. Acesse app.netlify.com/drop e arraste a PASTA descompactada.
-  3. Crie uma conta gratuita para o site nao expirar.
-  4. Use o endereco que o Netlify mostrar (algo como nome.netlify.app).
+PASSO A PASSO
+  1. FIREBASE - criar projeto
+     console.firebase.google.com > Adicionar projeto > de um nome > pode desativar o Google Analytics > Criar.
+  2. LOGIN GOOGLE
+     Build > Authentication > Comecar > aba "Sign-in method" > Google > Ativar > escolha seu e-mail de suporte > Salvar.
+  3. BANCO DE DADOS
+     Build > Firestore Database > Criar banco de dados > edicao Standard > local southamerica-east1 (Sao Paulo)
+     > iniciar em modo de producao > Criar.
+     Depois abra a aba "Regras", apague o conteudo, cole as regras abaixo (troque SEU-EMAIL@gmail.com pelo seu e-mail
+     do Google) e clique em Publicar:
 
-OPCAO 2 - GITHUB PAGES
-  1. Crie uma conta em github.com e um repositorio publico (ex.: controle-financeiro).
-  2. Add file > Upload files: envie os 6 arquivos > Commit changes.
-  3. Settings > Pages > Source: "Deploy from a branch" > Branch: main, pasta / (root) > Save.
-  4. Em ~1 minuto: https://SEU-USUARIO.github.io/controle-financeiro/
+       rules_version = '2';
+       service cloud.firestore {
+         match /databases/{database}/documents {
+           match /users/{uid}/{document=**} {
+             allow read, write: if request.auth != null
+               && request.auth.uid == uid
+               && request.auth.token.email == "SEU-EMAIL@gmail.com";
+           }
+         }
+       }
 
-OPCAO 3 - CLOUDFLARE PAGES
-  1. Crie uma conta em dash.cloudflare.com.
-  2. Workers & Pages > Create > Pages > Upload assets.
-  3. De um nome ao projeto, envie a pasta ou o zip, e clique em Deploy.
-  4. Endereco: nome.pages.dev
+  4. REGISTRAR O APP WEB
+     Engrenagem > Configuracoes do projeto > "Seus apps" > icone </> (Web) > de um apelido > Registrar app
+     (NAO precisa marcar o Firebase Hosting). Copie os valores apiKey, authDomain, projectId e appId do bloco
+     firebaseConfig e cole no arquivo firebase-config.js, entre as aspas.
+  5. AUTORIZAR O ENDERECO DO GITHUB
+     Authentication > Settings (Configuracoes) > Authorized domains > Add domain > SEU-USUARIO.github.io
+  6. GITHUB
+     No repositorio, Add file > Upload files > envie os 7 arquivos (substitui os antigos) > Commit changes.
+     Settings > Pages > Deploy from a branch > main > / (root) > Save (se ainda nao fez).
+  7. ENTRAR
+     Abra https://SEU-USUARIO.github.io/NOME-DO-REPOSITORIO/ > toque em "Entrar com Google".
+     Use o MESMO e-mail das regras. Faça o mesmo no outro aparelho.
+  8. TRAZER OS DADOS (uma vez so)
+     Aba Contas > cole o codigo de dados > Carregar codigo. Ele sobe para o Firebase e aparece nos dois aparelhos.
+  9. INSTALAR
+     Chrome > menu > Instalar app (celular) ou icone de instalar na barra de enderecos (computador).
 
-INSTALAR NO CELULAR (Chrome)
-  Abra o endereco > menu (tres pontos) > "Instalar app" (ou "Adicionar a tela inicial").
-INSTALAR NO COMPUTADOR (Chrome)
-  Abra o endereco > icone de instalar na barra de enderecos.
+SEGURANCA
+  - Os valores do firebase-config.js nao sao segredo; quem protege os dados sao as regras do passo 3.
+  - NAO envie para o GitHub o arquivo com seus dados (meus-dados-NAO-PUBLICAR.txt) nem codigos de backup.
 
-TRAZER SEUS DADOS DO APP ATUAL
-  1. No app atual (link do Claude): aba Contas > Gerar codigo > copie o codigo.
-  2. No app instalado: aba Contas > cole o codigo > Carregar codigo.
-  Esse codigo contem seus dados financeiros: cole so nos seus aparelhos e nao publique.
-
-LIMITES
-  - Sem sincronizacao automatica: cada aparelho guarda seus dados. Use o codigo de backup para copiar de um para o outro.
-  - Limpar os dados do navegador apaga o app. Guarde um codigo de backup.
+SE DER ERRO, o aviso no topo do app mostra o motivo. Os mais comuns:
+  - "endereco nao autorizado": refaca o passo 5.
+  - "regras do Firestore negaram o acesso": confira o e-mail nas regras (passo 3) e se clicou em Publicar.
+  - "nao configurada": o firebase-config.js ainda esta vazio (passo 4).
