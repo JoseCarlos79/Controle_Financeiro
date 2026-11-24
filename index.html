@@ -31,17 +31,32 @@ small,.mut{color:var(--mut);font-size:12px}.pos{color:var(--pos)}.neg{color:var(
 @media(min-width:1080px){.dash{grid-template-columns:repeat(3,1fr)}.ict{display:flex}.hb{display:none}}
 
 :root[data-theme=royal]{--bg:#ffffff;--card:#4169E1;--ink:#1d1b3a;--mut:#6b6a85;--line:#e4e6f5;--ac:#4169E1;--onac:#fff;--pos:#12a37f;--neg:#e5365f;color-scheme:light}
-:root[data-theme=royal] :is(.card,.top,.menu,#toast){--ink:#fff;--mut:rgba(255,255,255,.80);--line:rgba(255,255,255,.24);--pos:#8ff5c8;--neg:#ffc4d1;--ac:#fff;--onac:#4169E1;color:#fff}
-:root[data-theme=royal] .card,:root[data-theme=royal] .top{border:0;box-shadow:0 6px 18px rgba(65,105,225,.22)}
+:root[data-theme=royal] :is(.card,.top,.menu,#toast,.side){--ink:#fff;--mut:rgba(255,255,255,.80);--line:rgba(255,255,255,.24);--pos:#8ff5c8;--neg:#ffc4d1;--ac:#fff;--onac:#4169E1;color:#fff}
+:root[data-theme=royal] .card,:root[data-theme=royal] .top,:root[data-theme=royal] .side{border:0;box-shadow:0 6px 18px rgba(65,105,225,.22)}
 :root[data-theme=royal] .card.herob{background:linear-gradient(135deg,#1c2a7a 0%,#3a56d4 100%);box-shadow:0 8px 22px rgba(28,42,122,.35)}
 :root[data-theme=royal] .card .d8{filter:brightness(2.2) saturate(.8)}
 :root[data-theme=light]{--bg:#ffffff;--card:#ffffff;--ink:#1d1b3a;--mut:#7d7a99;--line:#e9e6f5;--ac:#7c5cf0;--onac:#fff}
-:root[data-theme=light] .card,:root[data-theme=light] .top{box-shadow:0 1px 3px rgba(40,30,90,.07);border:1px solid var(--line)}:root[data-theme=light] .card.herob{border:0;box-shadow:0 8px 22px rgba(30,107,255,.25)}
+:root[data-theme=light] .card,:root[data-theme=light] .top,:root[data-theme=light] .side{box-shadow:0 1px 3px rgba(40,30,90,.07);border:1px solid var(--line)}:root[data-theme=light] .card.herob{border:0;box-shadow:0 8px 22px rgba(30,107,255,.25)}
 :root[data-theme=dark]{--bg:#0e0b24;--card:#171434;--ink:#ecebf8;--mut:#9a97bd;--line:#2b2754;--pos:#3ddc97;--neg:#ff6b8a;--ac:#8b6cff;--onac:#fff;color-scheme:dark}
 :root[data-theme=dark] body{background:radial-gradient(900px 420px at 88% -6%,rgba(139,108,255,.20),transparent 70%),radial-gradient(700px 380px at -5% 8%,rgba(30,107,255,.12),transparent 70%),var(--bg);background-attachment:fixed}
 .card.herob{background:linear-gradient(135deg,#1e6bff 0%,#12b5c9 100%);border:0;color:#fff}.card.herob small{color:rgba(255,255,255,.82)}.card.herob .hv{font-size:30px;font-weight:700;margin:4px 0 8px;letter-spacing:-.5px}
 .themeb{color:var(--ink)!important;font-size:19px!important;width:32px;height:32px}
 @media(max-width:420px){.kpis .big{font-size:22px}}
+
+.side{display:none}
+@media(min-width:1080px){
+ .side{display:flex;flex-direction:column;align-items:center;gap:10px;position:fixed;left:14px;top:12px;bottom:12px;width:132px;padding:16px 8px;border-radius:28px;background:var(--card);color:var(--ink);overflow-y:auto;z-index:3}
+ #app{max-width:min(1280px,calc(100vw - 176px));margin:0 14px 0 162px}
+ .sbrand{font-size:13px;letter-spacing:.04em;text-align:center;line-height:1.25;margin-bottom:4px;text-transform:uppercase}
+ .stt{margin:6px 0 0;font-weight:600;font-size:15px;align-self:flex-start;padding-left:10px}
+ .sb{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;padding:4px 0;border-radius:16px;color:inherit}
+ .sb i{width:66px;height:66px;border-radius:50%;display:grid;place-items:center;font-size:30px;font-style:normal;background:linear-gradient(145deg,#a07bff,#6d4be0);box-shadow:0 6px 14px rgba(109,75,224,.38);transition:transform .15s}
+ .sb:hover i{transform:translateY(-2px) scale(1.04)}
+ .sb span{font-weight:700;font-size:13px}
+ .sb.on i{box-shadow:0 0 0 3px rgba(255,255,255,.9),0 6px 14px rgba(109,75,224,.45)}
+ :root[data-theme=light] .sb.on i{box-shadow:0 0 0 3px #d9cffc,0 6px 14px rgba(109,75,224,.4)}
+ .fab{display:none}
+}
 .gauge{display:block;margin:2px auto 0;width:min(240px,100%)}.gst{text-align:center;font-weight:700;font-size:17px;margin:8px 0 12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;min-width:0}.ct{font-size:12px;color:var(--mut);margin:0 0 12px}
 .card>h2:first-child{margin-top:0}h2{font-size:12px;font-weight:500;color:var(--mut);margin:26px 0 10px}
@@ -83,6 +98,16 @@ input[type=range]{width:100%;padding:0;border:0;accent-color:var(--ac)}
 <script>try{document.documentElement.dataset.theme=localStorage.getItem("fin-theme")||"royal"}catch(e){document.documentElement.dataset.theme="royal"}</script>
 </head>
 <body>
+<aside class="side" aria-label="Atalhos">
+<b class="sbrand">Controle<br>Financeiro</b>
+<p class="stt">Incluir:</p>
+<button class="sb" data-s="cartao" onclick="incluir('d','Cartão C6')"><i>💳</i><span>Cartão</span></button>
+<button class="sb" data-s="entrada" onclick="incluir('r')"><i>💵</i><span>Entrada</span></button>
+<button class="sb" data-s="despesa" onclick="incluir('d')"><i>🛒</i><span>Despesa</span></button>
+<p class="stt">Ver:</p>
+<button class="sb" data-v="contas" onclick="go('contas')"><i>🏠</i><span>Contas</span></button>
+<button class="sb" data-v="plano" onclick="go('plano')"><i>🎯</i><span>Plano</span></button>
+</aside>
 <div id="app"></div>
 <div id="toast" role="status" aria-live="polite"></div>
 <div id="sheet"></div>
@@ -211,6 +236,9 @@ function openSheet(){
   <div id="sn-box" style="display:none;gap:10px" class="row"><input id="sx2" inputmode="numeric" placeholder="Parcela atual (ex.: 3)" aria-label="Parcela atual"><input id="sn" inputmode="numeric" placeholder="Total (ex.: 10)" aria-label="Total de parcelas"></div>
   <button class="btn" onclick="saveSheet()">Salvar</button><small id="smsg">Em parcelados, informe o valor de cada parcela: o app preenche todas até a última.</small></div></div></div>`;
 }
+function incluir(t,a){openSheet();setSty(t);if(a){const sa=$('#sa');if(sa&&[...sa.options].some(o=>o.value===a))sa.value=a}setTimeout(()=>{const x=$('#sx');if(x)x.focus()},60)}
+function syncSide(){document.querySelectorAll('.sb[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===view))}
+{const _r=render;render=function(){_r();syncSide()}}
 const closeSheet=()=>{$('#sheet').innerHTML=''};
 const sheetRep=()=>{$('#sn-box').style.display=$('#srep').value==='n'?'flex':'none'};
 function setSty(t){sty=t;document.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on',b.dataset.t===t))}
