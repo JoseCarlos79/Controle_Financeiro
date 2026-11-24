@@ -30,13 +30,19 @@ small,.mut{color:var(--mut);font-size:12px}.pos{color:var(--pos)}.neg{color:var(
 @media(min-width:760px){.dash,.pg{grid-template-columns:1fr 1fr}.pg.one{grid-template-columns:1fr}}
 @media(min-width:1080px){.dash{grid-template-columns:repeat(3,1fr)}.ict{display:flex}.hb{display:none}}
 
+:root[data-theme=royal]{--bg:#ffffff;--card:#4169E1;--ink:#1d1b3a;--mut:#6b6a85;--line:#e4e6f5;--ac:#4169E1;--onac:#fff;--pos:#12a37f;--neg:#e5365f;color-scheme:light}
+:root[data-theme=royal] :is(.card,.top,.menu,#toast){--ink:#fff;--mut:rgba(255,255,255,.80);--line:rgba(255,255,255,.24);--pos:#8ff5c8;--neg:#ffc4d1;--ac:#fff;--onac:#4169E1;color:#fff}
+:root[data-theme=royal] .card,:root[data-theme=royal] .top{border:0;box-shadow:0 6px 18px rgba(65,105,225,.22)}
+:root[data-theme=royal] .card.herob{background:linear-gradient(135deg,#1c2a7a 0%,#3a56d4 100%);box-shadow:0 8px 22px rgba(28,42,122,.35)}
+:root[data-theme=royal] .card .d8{filter:brightness(2.2) saturate(.8)}
 :root[data-theme=light]{--bg:#ffffff;--card:#ffffff;--ink:#1d1b3a;--mut:#7d7a99;--line:#e9e6f5;--ac:#7c5cf0;--onac:#fff}
 :root[data-theme=light] .card,:root[data-theme=light] .top{box-shadow:0 1px 3px rgba(40,30,90,.07);border:1px solid var(--line)}:root[data-theme=light] .card.herob{border:0;box-shadow:0 8px 22px rgba(30,107,255,.25)}
 :root[data-theme=dark]{--bg:#0e0b24;--card:#171434;--ink:#ecebf8;--mut:#9a97bd;--line:#2b2754;--pos:#3ddc97;--neg:#ff6b8a;--ac:#8b6cff;--onac:#fff;color-scheme:dark}
 :root[data-theme=dark] body{background:radial-gradient(900px 420px at 88% -6%,rgba(139,108,255,.20),transparent 70%),radial-gradient(700px 380px at -5% 8%,rgba(30,107,255,.12),transparent 70%),var(--bg);background-attachment:fixed}
 .card.herob{background:linear-gradient(135deg,#1e6bff 0%,#12b5c9 100%);border:0;color:#fff}.card.herob small{color:rgba(255,255,255,.82)}.card.herob .hv{font-size:30px;font-weight:700;margin:4px 0 8px;letter-spacing:-.5px}
 .themeb{color:var(--ink)!important;font-size:19px!important;width:32px;height:32px}
-.gauge{display:block;margin:2px auto 0;width:min(240px,100%)}.gst{text-align:center;font-weight:700;font-size:17px;margin:0 0 12px}
+@media(max-width:420px){.kpis .big{font-size:22px}}
+.gauge{display:block;margin:2px auto 0;width:min(240px,100%)}.gst{text-align:center;font-weight:700;font-size:17px;margin:8px 0 12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;min-width:0}.ct{font-size:12px;color:var(--mut);margin:0 0 12px}
 .card>h2:first-child{margin-top:0}h2{font-size:12px;font-weight:500;color:var(--mut);margin:26px 0 10px}
 .big{font-size:26px;font-weight:600;letter-spacing:-.01em;line-height:1.15}.hero{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.1;margin:2px 0 10px}
@@ -74,7 +80,7 @@ input[type=range]{width:100%;padding:0;border:0;accent-color:var(--ac)}
 .fab.mic{bottom:calc(86px + env(safe-area-inset-bottom,0px));background:var(--card);color:var(--ac);border:2px solid var(--ac);font-size:24px;line-height:52px}
 @media(max-width:430px){.tt{display:none}}
 </style>
-<script>try{document.documentElement.dataset.theme=localStorage.getItem("fin-theme")||"light"}catch(e){document.documentElement.dataset.theme="light"}</script>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("fin-theme")||"royal"}catch(e){document.documentElement.dataset.theme="royal"}</script>
 </head>
 <body>
 <div id="app"></div>
@@ -329,9 +335,9 @@ function gauge(sc){
   const gp=(v,r)=>{const a=Math.PI*(1-v/100);return(100+r*Math.cos(a)).toFixed(1)+' '+(100-r*Math.sin(a)).toFixed(1)};
   const arc=(a,b,c)=>`<path d="M${gp(a,80)} A80 80 0 0 1 ${gp(b,80)}" fill="none" stroke="${c}" stroke-width="16" stroke-linecap="butt"/>`;
   const st=hStat(sc);
-  return`<svg class="gauge" viewBox="0 0 200 118" role="img" aria-label="Nota de saúde financeira ${sc} de 100, ${st[0]}">${arc(0,34,'#e5484d')}${arc(36,64,'#f5b301')}${arc(66,100,'#30c26b')}<line x1="100" y1="100" x2="${gp(sc,64).split(' ')[0]}" y2="${gp(sc,64).split(' ')[1]}" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/><circle cx="100" cy="100" r="6" fill="var(--ink)"/><text x="100" y="116" font-size="11" text-anchor="middle" fill="var(--mut)">nota ${sc}/100</text></svg><p class="gst" style="color:${st[1]}">${st[0]}</p>`;
+  return`<svg class="gauge" viewBox="0 0 200 118" role="img" aria-label="Nota de saúde financeira ${sc} de 100, ${st[0]}">${arc(0,34,'#e5484d')}${arc(36,64,'#f5b301')}${arc(66,100,'#30c26b')}<line x1="100" y1="100" x2="${gp(sc,64).split(' ')[0]}" y2="${gp(sc,64).split(' ')[1]}" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/><circle cx="100" cy="100" r="6" fill="var(--ink)"/><text x="100" y="116" font-size="11" text-anchor="middle" fill="var(--mut)">nota ${sc}/100</text></svg><p class="gst"><span style="background:${st[1]};color:${sc>=35&&sc<55?'#2b2300':'#fff'};padding:3px 16px;border-radius:99px">${st[0]}</span></p>`;
 }
-function toggleTheme(){const d=document.documentElement,n=d.dataset.theme==='dark'?'light':'dark';d.dataset.theme=n;try{localStorage.setItem('fin-theme',n)}catch(e){}}
+function toggleTheme(){const d=document.documentElement,L=['royal','light','dark'],n=L[(L.indexOf(d.dataset.theme)+1)%3];d.dataset.theme=n;try{localStorage.setItem('fin-theme',n)}catch(e){}}
 function saldos(){
   const t0=T0(),acc={};CF().bal.forEach(b=>acc[b[0]]=0);
   for(let k=t0;k<=M;k=addM(k,1))pend(k).forEach(x=>{if(x.r.acc in acc)acc[x.r.acc]+=x.r.type==='r'?x.r.v:-x.r.v});
@@ -376,7 +382,7 @@ function wrap(h,marks){
 }
 function render(){
   const ms=mDate(M).toLocaleDateString('pt-BR',{month:'short',year:'numeric'}).replace('.','').replace(' de ',' '),cur=TABS.find(t=>t[0]===view);
-  $('#app').innerHTML=`<header class="top"><button class="hb" onclick="menu=!menu;render()" aria-label="Menu" aria-expanded="${menu}">☰</button><b class="tt">${cur[1]}</b><nav class="ict">${TABS.map(t=>`<button class="${view===t[0]?'on':''}" onclick="go('${t[0]}')" title="${t[1]}" aria-label="${t[1]}">${t[2]}</button>`).join('')}</nav><span class="sp"></span><button class="micb" onclick="micGo()" aria-label="Lançar por voz" title="Lançar por voz">🎤</button><div class="pill"><button onclick="mm(-1)" aria-label="Mês anterior">‹</button><span>${ms}</span><button onclick="mm(1)" aria-label="Próximo mês">›</button></div><button class="sync themeb" onclick="toggleTheme()" aria-label="Trocar tema claro/escuro" title="Tema claro/escuro">🌓</button><button class="sync ${syncState}" id="syncb" onclick="syncNow()" title="${SYNCT[syncState]}" aria-label="Sincronização">☁</button>${menu?`<div class="menu">${TABS.map(t=>`<button class="${view===t[0]?'on':''}" onclick="go('${t[0]}')">${t[2]}&nbsp; ${t[1]}</button>`).join('')}</div>`:''}</header>`+syncBanner()+welcome()+(view==='visao'?vVisao():wrap(V[view](),SPLIT[view]||[]));
+  $('#app').innerHTML=`<header class="top"><button class="hb" onclick="menu=!menu;render()" aria-label="Menu" aria-expanded="${menu}">☰</button><b class="tt">${cur[1]}</b><nav class="ict">${TABS.map(t=>`<button class="${view===t[0]?'on':''}" onclick="go('${t[0]}')" title="${t[1]}" aria-label="${t[1]}">${t[2]}</button>`).join('')}</nav><span class="sp"></span><button class="micb" onclick="micGo()" aria-label="Lançar por voz" title="Lançar por voz">🎤</button><div class="pill"><button onclick="mm(-1)" aria-label="Mês anterior">‹</button><span>${ms}</span><button onclick="mm(1)" aria-label="Próximo mês">›</button></div><button class="sync themeb" onclick="toggleTheme()" aria-label="Trocar tema claro/escuro" title="Trocar tema (azul, claro, escuro)">🌓</button><button class="sync ${syncState}" id="syncb" onclick="syncNow()" title="${SYNCT[syncState]}" aria-label="Sincronização">☁</button>${menu?`<div class="menu">${TABS.map(t=>`<button class="${view===t[0]?'on':''}" onclick="go('${t[0]}')">${t[2]}&nbsp; ${t[1]}</button>`).join('')}</div>`:''}</header>`+syncBanner()+welcome()+(view==='visao'?vVisao():wrap(V[view](),SPLIT[view]||[]));
   requestAnimationFrame(()=>requestAnimationFrame(()=>{document.querySelectorAll('[data-w]').forEach(e=>e.style.width=e.dataset.w);document.querySelectorAll('[data-h]').forEach(e=>e.style.height=e.dataset.h)}));
   animHero();
 }
