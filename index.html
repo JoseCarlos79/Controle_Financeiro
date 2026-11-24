@@ -30,6 +30,8 @@ small,.mut{color:var(--mut);font-size:12px}.pos{color:var(--pos)}.neg{color:var(
 @media(min-width:760px){.dash,.pg{grid-template-columns:1fr 1fr}.pg.one{grid-template-columns:1fr}}
 @media(min-width:1080px){.dash{grid-template-columns:repeat(3,1fr)}.ict{display:flex}.hb{display:none}}
 
+:root[data-theme=light]{--bg:#ffffff;--card:#ffffff;--ink:#1d1b3a;--mut:#7d7a99;--line:#e9e6f5;--ac:#7c5cf0;--onac:#fff}
+:root[data-theme=light] .card,:root[data-theme=light] .top{box-shadow:0 1px 3px rgba(40,30,90,.07);border:1px solid var(--line)}:root[data-theme=light] .card.herob{border:0;box-shadow:0 8px 22px rgba(30,107,255,.25)}
 :root[data-theme=dark]{--bg:#0e0b24;--card:#171434;--ink:#ecebf8;--mut:#9a97bd;--line:#2b2754;--pos:#3ddc97;--neg:#ff6b8a;--ac:#8b6cff;--onac:#fff;color-scheme:dark}
 :root[data-theme=dark] body{background:radial-gradient(900px 420px at 88% -6%,rgba(139,108,255,.20),transparent 70%),radial-gradient(700px 380px at -5% 8%,rgba(30,107,255,.12),transparent 70%),var(--bg);background-attachment:fixed}
 .card.herob{background:linear-gradient(135deg,#1e6bff 0%,#12b5c9 100%);border:0;color:#fff}.card.herob small{color:rgba(255,255,255,.82)}.card.herob .hv{font-size:30px;font-weight:700;margin:4px 0 8px;letter-spacing:-.5px}
@@ -72,7 +74,7 @@ input[type=range]{width:100%;padding:0;border:0;accent-color:var(--ac)}
 .fab.mic{bottom:calc(86px + env(safe-area-inset-bottom,0px));background:var(--card);color:var(--ac);border:2px solid var(--ac);font-size:24px;line-height:52px}
 @media(max-width:430px){.tt{display:none}}
 </style>
-<script>try{document.documentElement.dataset.theme=localStorage.getItem("fin-theme")||"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("fin-theme")||"light"}catch(e){document.documentElement.dataset.theme="light"}</script>
 </head>
 <body>
 <div id="app"></div>
