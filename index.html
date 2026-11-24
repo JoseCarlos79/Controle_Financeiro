@@ -28,21 +28,9 @@ small,.mut{color:var(--mut);font-size:12px}.pos{color:var(--pos)}.neg{color:var(
 .menu{position:absolute;left:8px;top:56px;background:var(--card);box-shadow:0 12px 30px rgba(0,0,0,.18);border-radius:16px;padding:8px;z-index:4;min-width:210px}.menu button{display:block;width:100%;padding:12px 14px;border-radius:10px}.menu button.on{background:color-mix(in srgb,var(--ac) 16%,transparent);color:var(--ac);font-weight:600}
 .dash,.pg{display:grid;gap:14px;grid-template-columns:1fr;align-items:start}.dcol{display:grid;gap:14px;align-content:start}
 @media(min-width:760px){.dash,.pg{grid-template-columns:1fr 1fr}.pg.one{grid-template-columns:1fr}}
-@media(min-width:1080px){.dash{grid-template-columns:repeat(3,1fr)}.ict{display:flex}.hb{display:none}}
+@media(min-width:1080px){.pg:not(.one){grid-template-columns:repeat(auto-fit,minmax(380px,1fr))}}
+@media(min-width:1080px){.dash{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}.ict{display:flex}.hb{display:none}}
 
-:root[data-theme=royal]{--bg:#ffffff;--card:#4169E1;--ink:#1d1b3a;--mut:#6b6a85;--line:#e4e6f5;--ac:#4169E1;--onac:#fff;--pos:#12a37f;--neg:#e5365f;color-scheme:light}
-:root[data-theme=royal] :is(.card,.top,.menu,#toast,.side){--ink:#fff;--line:rgba(255,255,255,.24);--pos:#9dffd5;--neg:#ffd3dd;--ac:#fff;--onac:#4169E1;--mut:rgba(255,255,255,.94);color:#fff}
-:root[data-theme=royal] .card,:root[data-theme=royal] .top,:root[data-theme=royal] .side{border:0;box-shadow:0 6px 18px rgba(65,105,225,.22)}
-:root[data-theme=royal] .card.herob{background:linear-gradient(135deg,#1c2a7a 0%,#3a56d4 100%);box-shadow:0 8px 22px rgba(28,42,122,.35)}
-:root[data-theme=royal] .card small,:root[data-theme=royal] .side small{font-size:13px}
-:root[data-theme=royal] .card .ct{font-size:14px;font-weight:700;color:#fff}
-:root[data-theme=royal] .card .big,:root[data-theme=royal] .card .hv{font-weight:700}
-:root[data-theme=royal] .card b{font-weight:700}
-:root[data-theme=royal] .card .tb th{font-size:13px;font-weight:600;color:#fff}
-:root[data-theme=royal] .card svg text{font-size:9px;font-weight:600}
-:root[data-theme=royal] .card svg.gauge text{font-size:11px}
-:root[data-theme=royal] .card .li small,:root[data-theme=royal] .card .lg small{color:rgba(255,255,255,.92)}
-:root[data-theme=royal] .card .d8{filter:brightness(2.2) saturate(.8)}
 :root[data-theme=light]{--bg:#ffffff;--card:#ffffff;--ink:#1d1b3a;--mut:#7d7a99;--line:#e9e6f5;--ac:#7c5cf0;--onac:#fff}
 :root[data-theme=light] .card,:root[data-theme=light] .top,:root[data-theme=light] .side{box-shadow:0 1px 3px rgba(40,30,90,.07);border:1px solid var(--line)}:root[data-theme=light] .card.herob{border:0;box-shadow:0 8px 22px rgba(30,107,255,.25)}
 :root[data-theme=dark]{--bg:#0e0b24;--card:#171434;--ink:#ecebf8;--mut:#9a97bd;--line:#2b2754;--pos:#3ddc97;--neg:#ff6b8a;--ac:#8b6cff;--onac:#fff;color-scheme:dark}
@@ -54,7 +42,7 @@ small,.mut{color:var(--mut);font-size:12px}.pos{color:var(--pos)}.neg{color:var(
 .side{display:none}
 @media(min-width:1080px){
  .side{display:flex;flex-direction:column;align-items:center;gap:10px;position:fixed;left:14px;top:12px;bottom:12px;width:132px;padding:16px 8px;border-radius:28px;background:var(--card);color:var(--ink);overflow-y:auto;z-index:3}
- #app{max-width:min(1280px,calc(100vw - 176px));margin:0 14px 0 162px}
+ #app{max-width:none;margin:0 14px 0 162px}
  .sbrand{font-size:13px;letter-spacing:.04em;text-align:center;line-height:1.25;margin-bottom:4px;text-transform:uppercase}
  .stt{margin:6px 0 0;font-weight:600;font-size:15px;align-self:flex-start;padding-left:10px}
  .sb{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;padding:4px 0;border-radius:16px;color:inherit}
@@ -66,12 +54,27 @@ small,.mut{color:var(--mut);font-size:12px}.pos{color:var(--pos)}.neg{color:var(
  .fab{display:none}
 }
 .gbox{background:color-mix(in srgb,var(--ink) 9%,transparent);border-radius:14px;padding:14px 16px}
-:root[data-theme=royal] .card input::placeholder,:root[data-theme=royal] .card textarea::placeholder{color:rgba(255,255,255,.75);opacity:1}
-:root[data-theme=royal] .card input,:root[data-theme=royal] .card select,:root[data-theme=royal] .card textarea{color:#fff;border-color:rgba(255,255,255,.4)}
-:root[data-theme=royal] .card input[type=month]::-webkit-calendar-picker-indicator{filter:invert(1)}
 .gbar{height:10px;border-radius:99px;background:var(--line);overflow:hidden;margin:8px 0}.gbar i{display:block;height:100%;border-radius:99px;background:var(--pos)}
 .gform input{background:transparent;border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--ink);width:100%;margin-top:8px}
 .gchips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}.gchips button{border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:12px;color:var(--ink)}
+/* tema "royal": visual da foto (azul-marinho com brilho neon, vidro) */
+:root[data-theme=royal]{--bg:#020a4a;--card:rgba(6,20,98,.72);--ink:#ffffff;--mut:rgba(214,229,255,.92);--line:rgba(110,165,255,.30);--pos:#7dffc8;--neg:#ff9db4;--ac:#5cb0ff;--onac:#02103f;color-scheme:dark}
+:root[data-theme=royal] body{background:#010038 url(bg.jpg) center/cover no-repeat fixed}
+:root[data-theme=royal] :is(.card,.top,.side){-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(80,160,255,.38);box-shadow:0 0 22px rgba(20,120,255,.16),inset 0 0 0 1px rgba(255,255,255,.04)}
+:root[data-theme=royal] .menu,:root[data-theme=royal] #toast{background:#071a6e;border:1px solid rgba(80,160,255,.4)}
+:root[data-theme=royal] .card.herob{background:linear-gradient(135deg,rgba(2,161,255,.85) 0%,rgba(30,70,230,.88) 100%);border:1px solid rgba(11,238,255,.55);box-shadow:0 0 28px rgba(2,161,255,.35)}
+:root[data-theme=royal] .card small,:root[data-theme=royal] .side small{font-size:13px}
+:root[data-theme=royal] .card .ct{font-size:14px;font-weight:700;color:#fff}
+:root[data-theme=royal] .card .big,:root[data-theme=royal] .card .hv,:root[data-theme=royal] .card b{font-weight:700}
+:root[data-theme=royal] .card .tb th{font-size:13px;font-weight:600;color:#fff}
+:root[data-theme=royal] .card svg text{font-size:9px;font-weight:600}
+:root[data-theme=royal] .card svg.gauge text{font-size:11px}
+:root[data-theme=royal] .card input::placeholder,:root[data-theme=royal] .card textarea::placeholder{color:rgba(214,229,255,.75);opacity:1}
+:root[data-theme=royal] .card input[type=month]::-webkit-calendar-picker-indicator{filter:invert(1)}
+:root[data-theme=royal] .sb i{box-shadow:0 0 16px rgba(2,161,255,.5)}
+.catr{display:block;width:100%;text-align:left;padding:10px 0;border-top:1px solid var(--line)}.catr:first-of-type{border-top:0}
+.catr .lg{margin:0}.cbar{height:6px;border-radius:99px;background:var(--line);margin:7px 0 0;overflow:hidden}.cbar i{display:block;height:100%;border-radius:99px}
+.cit{padding:2px 0 10px 18px}.cit .li{padding:6px 0;border-top:1px dashed var(--line)}.cit .li:first-child{border-top:0}
 .gauge{display:block;margin:2px auto 0;width:min(240px,100%)}.gst{text-align:center;font-weight:700;font-size:17px;margin:8px 0 12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;min-width:0}.ct{font-size:12px;color:var(--mut);margin:0 0 12px}
 .card>h2:first-child{margin-top:0}h2{font-size:12px;font-weight:500;color:var(--mut);margin:26px 0 10px}
@@ -264,6 +267,16 @@ function goalMove(id,sign){
   g.saved=Math.max(0,+(g.saved+sign*v).toFixed(2));save();render();
 }
 function goalDel(id){S.goals=(S.goals||[]).filter(x=>x.id!==id);save();render();toast('Meta excluída.')}
+const OC={};
+function catTgl(c){OC[c]=!OC[c];render()}
+function catCard(by,dt,seg,m){
+  if(!(dt>0))return'<section class="card"><p class="ct">Despesas por categoria</p><p class="mut">Sem despesas neste mês.</p></section>';
+  const rows=by.map(x=>{
+    const open=!!OC[x.c],its=[...m.a.filter(t=>t.type==='d'&&t.cat===x.c).map(t=>({d:t.d,n:t.desc,v:t.val,sub:t.acc,pv:false})),...m.po.filter(p=>p.r.cat===x.c).map(p=>({d:p.d,n:p.r.n,v:p.r.v,sub:p.r.acc,pv:true}))].sort((a,b)=>b.d.localeCompare(a.d));
+    const det=open?`<div class="cit">${its.map(t=>`<div class="li"><small style="width:40px">${t.d.slice(8)}/${t.d.slice(5,7)}</small><div class="l" style="flex:1"><b>${esc(t.n)}</b><small>${esc(t.sub||'')}${t.pv?' · previsto':''}</small></div><b class="neg">−${fmt(t.v)}</b></div>`).join('')}</div>`:'';
+    return`<div><button class="catr" onclick="catTgl('${x.c.replace(/'/g,"\\'")}')" aria-expanded="${open}"><div class="lg"><span><i class="dot" style="background:${COL[x.i]}"></i><b>${x.c}</b> <small>${Math.round(x.v/dt*100)}% · ${its.length} ${its.length===1?'item':'itens'}</small></span><b class="neg">−${fmt(x.v)}</b></div><div class="cbar"><i style="width:${x.v/by[0].v*100}%;background:${COL[x.i]}"></i></div><small style="display:block;margin-top:4px;opacity:.85">${open?'▲ ocultar itens':'▼ ver itens'}</small></button>${det}</div>`}).join('');
+  return`<section class="card"><p class="ct">Despesas por categoria</p><div style="display:grid;place-items:center"><svg viewBox="0 0 120 120" width="190" height="190" role="img" aria-label="Despesas por categoria">${seg}<text x="60" y="56" text-anchor="middle" font-size="6.5" fill="var(--mut)">Total</text><text x="60" y="67" text-anchor="middle" font-size="7.2" font-weight="700" fill="var(--ink)">${fmt(dt)}</text></svg></div><div style="margin-top:10px">${rows}</div></section>`;
+}
 function openSheet(){
   sty='d';const o=L=>L.map(x=>`<option>${x}</option>`).join('');
   $('#sheet').innerHTML=`<div class="sheet" onclick="if(event.target===this)closeSheet()"><div role="dialog" aria-label="Novo lançamento"><div class="row"><h1 style="text-transform:none">Novo lançamento</h1><button class="ic" onclick="closeSheet()" aria-label="Fechar">×</button></div>
@@ -430,8 +443,7 @@ function vVisao(){
   <section class="card herob"><small>Saldo total em conta</small><div class="hv">${fmt(tc)}</div><small>Projetado até o fim do mês: <b>${fmt(tp)}</b></small></section>
   <section class="card"><p class="ct">Resumo do mês${m.P.length?' (com previstos)':''}</p><div class="kpis"><div><small>Entradas</small><div class="big pos">${fmt(m.r)}</div>${dl(m.r,pm.r,true)}</div><div><small>Saídas</small><div class="big neg">${fmt(m.d)}</div>${dl(m.d,pm.d,false)}</div><div><small>Resultado</small><div class="big ${res<0?'neg':'pos'}" id="hero" data-v="${res}">${fmt(shown)}</div><small>${m.P.length||m.ve?'inclui previstos':'realizado'}</small></div><div><small>Já recebido</small><div class="big" style="font-size:20px">${fmt(m.ri)}</div><small>${fmt(m.rd)} pagos</small></div></div><p style="text-align:right;margin:12px 0 0"><button class="link" onclick="go('mov')">Ver detalhes</button></p></section>
   <section class="card"><p class="ct">Saúde financeira</p>${gauge(hScore(res,m.r))}<p class="mut" style="text-align:center;margin:0 0 12px;font-size:12px">${res<0?'Saídas acima das entradas neste mês':'Saídas dentro do que entra'}</p><div style="text-align:center"><small>Realizado</small><div class="big" style="font-size:20px">${fmt(m.ri-m.rd)}</div><small>Projetado até o fim do mês</small><div class="big" style="font-size:20px">${fmt(res)}</div><small><button class="link" onclick="go('plano')">Ver plano de ação</button></small></div></section>
-  <section class="card"><p class="ct">Despesas por categoria</p>${dt>0?`<div style="display:grid;place-items:center"><svg viewBox="0 0 120 120" width="180" height="180" role="img" aria-label="Despesas por categoria">${seg}</svg></div><div style="margin-top:10px">${leg}</div>`:'<p class="mut">Sem despesas neste mês.</p>'}</section>
-  <section class="card"><p class="ct">Dívidas</p><small>Total no ${CF().ref||'cadastro'}</small><div class="big neg" style="margin-bottom:12px">${fmt(tot)}</div><small>Mais caras: rotativo e cheque especial</small>${caras.map(c=>`<div class="lg" style="margin-top:8px"><span>${c[0]}</span><b>${fmt(c[1])}</b></div><div class="hbar"><i style="width:${c[1]/mxc*100}%"></i></div>`).join('')}<button class="link" onclick="go('contas')">Ver todas</button></section></div>
+    <section class="card"><p class="ct">Dívidas</p><small>Total no ${CF().ref||'cadastro'}</small><div class="big neg" style="margin-bottom:12px">${fmt(tot)}</div><small>Mais caras: rotativo e cheque especial</small>${caras.map(c=>`<div class="lg" style="margin-top:8px"><span>${c[0]}</span><b>${fmt(c[1])}</b></div><div class="hbar"><i style="width:${c[1]/mxc*100}%"></i></div>`).join('')}<button class="link" onclick="go('contas')">Ver todas</button></section></div>
   <div class="dcol">
   <section class="card"><p class="ct">Saldos de caixa</p><table class="tb"><tr><th></th><th>Confirmado</th><th>Projetado</th></tr>${sdRows}<tr style="border-top:1px solid var(--line)"><td><b>Total</b></td><td class="${tc<0?'neg':'pos'}"><b>${fmt(tc)}</b></td><td class="${tp<0?'neg':'pos'}"><b>${fmt(tp)}</b></td></tr></table><small>${esc(CF().balNote||'Projetado soma os previstos até o fim do mês exibido.')}</small></section>
   <section class="card"><p class="ct">Fluxo de caixa do mês</p>${fx.svg}<div class="lg"><small>Resultado projetado no fim do mês</small><b class="${fx.end<0?'neg':'pos'}">${fmt(fx.end)}</b></div><small>Inclui os previstos e a estimativa de gastos do dia a dia.</small></section>
@@ -440,7 +452,8 @@ function vVisao(){
   <section class="card"><p class="ct">Contas a receber</p><div class="sl">${rec}</div><div class="lg" style="border-top:1px solid var(--line);margin-top:6px;padding-top:8px"><b>Total</b><b class="pos">${fmt(m.pIn)}</b></div></section>
   <section class="card"><p class="ct">Contas a pagar</p><div class="sl">${pag}</div><div class="lg" style="border-top:1px solid var(--line);margin-top:6px;padding-top:8px"><b>Total</b><b>${fmt(pg.reduce((s,x)=>s+x.v,0))}</b></div><small>As faturas de cartão a confirmar estão em Contas.</small></section>
   <section class="card"><p class="ct">Cartões de crédito</p>${cards}</section>
-  <section class="card"><p class="ct">Resultado dos meses</p>${barsSVG()}<div class="lg" style="justify-content:center;gap:16px"><span><i class="dot" style="background:var(--pos)"></i>Entradas</span><span><i class="dot" style="background:var(--neg)"></i>Saídas</span></div></section></div></div>
+  <section class="card"><p class="ct">Resultado dos meses</p>${barsSVG()}<div class="lg" style="justify-content:center;gap:16px"><span><i class="dot" style="background:var(--pos)"></i>Entradas</span><span><i class="dot" style="background:var(--neg)"></i>Saídas</span></div></section></div>
+  <div class="dcol">${catCard(by,dt,seg,m)}</div></div>
   ${M<T0()?'<p class="mut" style="margin-top:14px">Meses anteriores mostram apenas o que foi lançado.</p>':''}`;
 }
 function wrap(h,marks){
