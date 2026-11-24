@@ -31,9 +31,17 @@ small,.mut{color:var(--mut);font-size:12px}.pos{color:var(--pos)}.neg{color:var(
 @media(min-width:1080px){.dash{grid-template-columns:repeat(3,1fr)}.ict{display:flex}.hb{display:none}}
 
 :root[data-theme=royal]{--bg:#ffffff;--card:#4169E1;--ink:#1d1b3a;--mut:#6b6a85;--line:#e4e6f5;--ac:#4169E1;--onac:#fff;--pos:#12a37f;--neg:#e5365f;color-scheme:light}
-:root[data-theme=royal] :is(.card,.top,.menu,#toast,.side){--ink:#fff;--mut:rgba(255,255,255,.80);--line:rgba(255,255,255,.24);--pos:#8ff5c8;--neg:#ffc4d1;--ac:#fff;--onac:#4169E1;color:#fff}
+:root[data-theme=royal] :is(.card,.top,.menu,#toast,.side){--ink:#fff;--line:rgba(255,255,255,.24);--pos:#9dffd5;--neg:#ffd3dd;--ac:#fff;--onac:#4169E1;--mut:rgba(255,255,255,.94);color:#fff}
 :root[data-theme=royal] .card,:root[data-theme=royal] .top,:root[data-theme=royal] .side{border:0;box-shadow:0 6px 18px rgba(65,105,225,.22)}
 :root[data-theme=royal] .card.herob{background:linear-gradient(135deg,#1c2a7a 0%,#3a56d4 100%);box-shadow:0 8px 22px rgba(28,42,122,.35)}
+:root[data-theme=royal] .card small,:root[data-theme=royal] .side small{font-size:13px}
+:root[data-theme=royal] .card .ct{font-size:14px;font-weight:700;color:#fff}
+:root[data-theme=royal] .card .big,:root[data-theme=royal] .card .hv{font-weight:700}
+:root[data-theme=royal] .card b{font-weight:700}
+:root[data-theme=royal] .card .tb th{font-size:13px;font-weight:600;color:#fff}
+:root[data-theme=royal] .card svg text{font-size:9px;font-weight:600}
+:root[data-theme=royal] .card svg.gauge text{font-size:11px}
+:root[data-theme=royal] .card .li small,:root[data-theme=royal] .card .lg small{color:rgba(255,255,255,.92)}
 :root[data-theme=royal] .card .d8{filter:brightness(2.2) saturate(.8)}
 :root[data-theme=light]{--bg:#ffffff;--card:#ffffff;--ink:#1d1b3a;--mut:#7d7a99;--line:#e9e6f5;--ac:#7c5cf0;--onac:#fff}
 :root[data-theme=light] .card,:root[data-theme=light] .top,:root[data-theme=light] .side{box-shadow:0 1px 3px rgba(40,30,90,.07);border:1px solid var(--line)}:root[data-theme=light] .card.herob{border:0;box-shadow:0 8px 22px rgba(30,107,255,.25)}
@@ -50,13 +58,20 @@ small,.mut{color:var(--mut);font-size:12px}.pos{color:var(--pos)}.neg{color:var(
  .sbrand{font-size:13px;letter-spacing:.04em;text-align:center;line-height:1.25;margin-bottom:4px;text-transform:uppercase}
  .stt{margin:6px 0 0;font-weight:600;font-size:15px;align-self:flex-start;padding-left:10px}
  .sb{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;padding:4px 0;border-radius:16px;color:inherit}
- .sb i{width:66px;height:66px;border-radius:50%;display:grid;place-items:center;font-size:30px;font-style:normal;background:linear-gradient(145deg,#a07bff,#6d4be0);box-shadow:0 6px 14px rgba(109,75,224,.38);transition:transform .15s}
+ .sb i{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;font-size:30px;font-style:normal;background:linear-gradient(145deg,#a07bff,#6d4be0);box-shadow:0 6px 14px rgba(109,75,224,.38);transition:transform .15s}
  .sb:hover i{transform:translateY(-2px) scale(1.04)}
  .sb span{font-weight:700;font-size:13px}
  .sb.on i{box-shadow:0 0 0 3px rgba(255,255,255,.9),0 6px 14px rgba(109,75,224,.45)}
  :root[data-theme=light] .sb.on i{box-shadow:0 0 0 3px #d9cffc,0 6px 14px rgba(109,75,224,.4)}
  .fab{display:none}
 }
+.gbox{background:color-mix(in srgb,var(--ink) 9%,transparent);border-radius:14px;padding:14px 16px}
+:root[data-theme=royal] .card input::placeholder,:root[data-theme=royal] .card textarea::placeholder{color:rgba(255,255,255,.75);opacity:1}
+:root[data-theme=royal] .card input,:root[data-theme=royal] .card select,:root[data-theme=royal] .card textarea{color:#fff;border-color:rgba(255,255,255,.4)}
+:root[data-theme=royal] .card input[type=month]::-webkit-calendar-picker-indicator{filter:invert(1)}
+.gbar{height:10px;border-radius:99px;background:var(--line);overflow:hidden;margin:8px 0}.gbar i{display:block;height:100%;border-radius:99px;background:var(--pos)}
+.gform input{background:transparent;border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--ink);width:100%;margin-top:8px}
+.gchips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}.gchips button{border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:12px;color:var(--ink)}
 .gauge{display:block;margin:2px auto 0;width:min(240px,100%)}.gst{text-align:center;font-weight:700;font-size:17px;margin:8px 0 12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;min-width:0}.ct{font-size:12px;color:var(--mut);margin:0 0 12px}
 .card>h2:first-child{margin-top:0}h2{font-size:12px;font-weight:500;color:var(--mut);margin:26px 0 10px}
@@ -106,7 +121,8 @@ input[type=range]{width:100%;padding:0;border:0;accent-color:var(--ac)}
 <button class="sb" data-s="despesa" onclick="incluir('d')"><i>🛒</i><span>Despesa</span></button>
 <p class="stt">Ver:</p>
 <button class="sb" data-v="contas" onclick="go('contas')"><i>🏠</i><span>Contas</span></button>
-<button class="sb" data-v="plano" onclick="go('plano')"><i>🎯</i><span>Plano</span></button>
+<button class="sb" data-v="plano" onclick="go('plano')"><i>📈</i><span>Plano</span></button>
+<button class="sb" data-v="metas" onclick="go('metas')"><i>🎯</i><span>Metas</span></button>
 </aside>
 <div id="app"></div>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -225,6 +241,29 @@ function vFixos(){
   const L=ty=>S.rules.filter(r=>r.type===ty).sort((a,b)=>a.day-b.day).map(row).join('')||'<p class="mut">Nenhum.</p>';
   return`<small>Preenchidos automaticamente até a última parcela. Eles aparecem como “previstos” em cada mês, e você confirma ou pula.</small><button class="btn" style="margin:14px 0" onclick="openSheet()">Adicionar fixo ou parcelado</button><h2>Entradas</h2>${L('r')}<h2>Saídas</h2>${L('d')}`;
 }
+const gMoney=v=>fmt(v);
+function vMetas(){
+  const G=S.goals||[],sug=(CF().cara||[]).slice(0,3);
+  const form=`<div class="gbox"><p class="ct">Nova meta</p><div class="gform"><input id="gn" placeholder="Nome da meta (ex.: quitar o limite do Itaú)" aria-label="Nome da meta"><input id="gt" inputmode="decimal" placeholder="Valor da meta (R$)" aria-label="Valor da meta"><input id="gs" inputmode="decimal" placeholder="Já guardado (R$), opcional" aria-label="Já guardado"><label class="mut" style="display:block;margin-top:8px">Prazo (opcional)<input id="gb" type="month" aria-label="Prazo"></label></div>${sug.length?`<small style="display:block;margin-top:12px">Sugestões a partir das suas dívidas mais caras:</small><div class="gchips">${sug.map((c,i)=>`<button onclick="goalFill(${i})">Quitar ${esc(c[0])}</button>`).join('')}</div>`:''}<button class="btn" style="margin-top:14px" onclick="goalAddNew()">Criar meta</button><small id="gmsg" style="display:block;margin-top:8px"></small></div>`;
+  const card=g=>{
+    const pct=g.target>0?Math.min(100,Math.round(g.saved/g.target*100)):0,rest=Math.max(0,g.target-g.saved);
+    let prazo='';
+    if(g.by){const left=mdiff(T0(),g.by)+1;prazo=left<=0?`<small class="neg">Prazo (${mon(g.by)}) já passou.</small>`:rest>0?`<small>Até ${mon(g.by)}: guardar <b>${gMoney(rest/left)}</b> por mês (${left} ${left>1?'meses':'mês'}).</small>`:''}
+    return`<div class="gbox"><div class="lg"><b>${esc(g.n)}</b><b>${pct}%</b></div><div class="gbar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div><div class="lg"><small>${gMoney(g.saved)} de ${gMoney(g.target)}</small><small>${rest>0?'faltam '+gMoney(rest):'<b class="pos">meta atingida!</b>'}</small></div>${prazo}<div class="row" style="gap:8px;margin-top:12px"><input id="gv-${g.id}" inputmode="decimal" placeholder="Valor (R$)" aria-label="Valor a guardar" style="background:transparent;border:1px solid var(--line);border-radius:10px;padding:9px;color:var(--ink);width:120px"><button class="link" onclick="goalMove(${g.id},1)">Guardar</button><button class="link" onclick="goalMove(${g.id},-1)">Retirar</button><span class="sp"></span><button class="link neg" onclick="goalDel(${g.id})">Excluir</button></div></div>`};
+  return`<small>Defina quanto quer juntar (ou quitar) e acompanhe o progresso. As metas sincronizam entre os seus aparelhos.</small><div class="pg" style="margin-top:12px">${form}${G.map(card).join('')}</div>${G.length?'':'<p class="mut" style="margin-top:12px">Nenhuma meta ainda. Crie a primeira ao lado.</p>'}`;
+}
+function goalFill(i){const c=(CF().cara||[])[i];if(!c)return;$('#gn').value='Quitar '+c[0];$('#gt').value=String(c[1]).replace('.',',');$('#gn').focus()}
+function goalAddNew(){
+  const n=$('#gn').value.trim(),t=num($('#gt').value),sv=num($('#gs').value)||0,by=$('#gb').value||'',m=x=>{$('#gmsg').textContent=x};
+  if(!n||!(t>0)){m('Informe o nome e o valor da meta.');return}
+  S.goals=S.goals||[];S.goals.push({id:uid(),n,target:t,saved:Math.max(0,sv),by});save();render();toast('Meta criada.');
+}
+function goalMove(id,sign){
+  const g=(S.goals||[]).find(x=>x.id===id),el=$('#gv-'+id),v=num(el&&el.value);
+  if(!g||!(v>0)){toast('Digite um valor maior que zero.');return}
+  g.saved=Math.max(0,+(g.saved+sign*v).toFixed(2));save();render();
+}
+function goalDel(id){S.goals=(S.goals||[]).filter(x=>x.id!==id);save();render();toast('Meta excluída.')}
 function openSheet(){
   sty='d';const o=L=>L.map(x=>`<option>${x}</option>`).join('');
   $('#sheet').innerHTML=`<div class="sheet" onclick="if(event.target===this)closeSheet()"><div role="dialog" aria-label="Novo lançamento"><div class="row"><h1 style="text-transform:none">Novo lançamento</h1><button class="ic" onclick="closeSheet()" aria-label="Fechar">×</button></div>
@@ -320,7 +359,7 @@ function vContas(){
   <h2>Dívidas</h2><details><summary>Total no ${CF().ref||'cadastro'}: ${fmt(tot)}</summary>${CF().debts.map(x=>`<div class="row"><span>${x[0]}</span><b>${fmt(x[1])}</b></div>`).join('')}<small>${esc(CF().taxas||'')} Rotativo e cheque especial custam mais por mês, então costumam ser a prioridade em renegociações. Não é recomendação financeira.</small></details>
   <details open><summary>Sincronização e backup</summary><small id="syncmsg">${syncMsg()}</small> ${syncState==='login'?'<button class="link" onclick="signIn()">Entrar com Google</button> ':''}<button class="link" onclick="syncNow()">Sincronizar agora</button> ${userEmail?'<button class="link" onclick="signOutNow()">Sair da conta</button>':''}<br><small>Backup manual: gere o código, copie e cole em outro aparelho.</small><textarea id="bk" rows="2" style="width:100%;margin:8px 0" aria-label="Código de backup"></textarea><div class="row"><button class="link" onclick="exportCode()">Gerar código</button><button class="link" onclick="importCode()">Carregar código</button><label class="link" style="cursor:pointer">Carregar arquivo<input type="file" accept=".json,.txt,application/json,text/plain" onchange="importFile(this)" hidden></label></div><small id="bkm"></small><div class="row" style="margin-top:10px"><button class="link" style="color:var(--neg)" onclick="askZero()">Zerar gastos…</button><button class="link neg" onclick="reset(false)">Apagar tudo</button></div></details>`;
 }
-const V={visao:vVisao,plano:vPlano,mov:vMov,fixos:vFixos,contas:vContas};
+const V={visao:vVisao,plano:vPlano,mov:vMov,fixos:vFixos,metas:vMetas,contas:vContas};
 function render(){
   const ms=mDate(M).toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
   $('#app').innerHTML=`<div class="mrow"><button class="ic" onclick="mm(-1)" aria-label="Mês anterior">‹</button><h1>${ms}</h1><button class="ic" onclick="mm(1)" aria-label="Próximo mês">›</button></div>
@@ -329,7 +368,7 @@ function render(){
   animHero();
 }
 /* Dashboard */
-const TABS=[['visao','Visão geral','▦'],['plano','Plano','◎'],['mov','Movimentos','☰'],['fixos','Fixos','↻'],['contas','Contas','▤']];
+const TABS=[['visao','Visão geral','▦'],['plano','Plano','◎'],['mov','Movimentos','☰'],['fixos','Fixos','↻'],['metas','Metas','★'],['contas','Contas','▤']];
 const SPLIT={plano:['<h2>Plano em 7 passos</h2>'],contas:['<h2>Dívidas</h2>'],fixos:['<h2>Saídas</h2>'],mov:[]};
 function mt(k){
   const a=inM(k),P=pend(k),pi=P.filter(x=>x.r.type==='r'),po=P.filter(x=>x.r.type==='d'),sm=l=>l.reduce((s,x)=>s+x.r.v,0);
@@ -346,7 +385,7 @@ function fluxo(k){
   for(let i=1;i<=n;i++)c[i]=c[i-1]+ev[i]-((k>t0||(k===t0&&i>tdd))?vv:0);
   const mn=Math.min(0,...c),mx=Math.max(0,...c),sp=(mx-mn)||1,sx=i=>36+(i-1)/(n-1)*258,sy=v=>104-(v-mn)/sp*92;
   const path=c.slice(1).map((v,i)=>(i?'L':'M')+sx(i+1).toFixed(1)+' '+sy(v).toFixed(1)).join(' ');
-  const lb=(y,t)=>`<text x="32" y="${y+3}" font-size="8" text-anchor="end" fill="var(--mut)">${t}</text>`;
+  const lb=(y,t)=>`<text x="35" y="${y+3}" font-size="8" text-anchor="end" fill="var(--mut)">${t}</text>`;
   const xl=[1,8,15,22,n>28?29:28].map(d=>`<text x="${sx(d)}" y="124" font-size="8" text-anchor="middle" fill="var(--mut)">${String(d).padStart(2,'0')}</text>`).join('');
   const dot=k===t0?`<circle cx="${sx(tdd)}" cy="${sy(c[tdd])}" r="3.5" fill="var(--ac)"/>`:'';
   return{end:c[n],svg:`<svg viewBox="0 0 300 130" width="100%" role="img" aria-label="Fluxo de caixa do mês"><line x1="36" x2="296" y1="${sy(0)}" y2="${sy(0)}" stroke="var(--line)" stroke-dasharray="3 3"/>${mx>0?lb(sy(mx),fK(mx)):''}${lb(sy(0),'0')}${mn<0?lb(sy(mn),fK(mn)):''}<path d="${path}" fill="none" stroke="var(--ac)" stroke-width="1.8" stroke-linejoin="round"/>${dot}${xl}</svg>`};
