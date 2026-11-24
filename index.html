@@ -10,11 +10,19 @@
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preload" href="fonts/Exo2-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="fonts/Exo2-Bold.ttf" as="font" type="font/ttf" crossorigin>
 <style>
 :root{--bg:#ffffff;--card:#f8f7f2;--ink:#2a2f2d;--mut:#858b87;--line:#e8e6de;--pos:#12c29a;--neg:#f2456f;--ac:#19c8a0;--onac:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
+@font-face{font-family:'Exo 2';src:url(fonts/Exo2-Light.ttf) format('truetype');font-weight:300;font-style:normal;font-display:swap}
 @font-face{font-family:'Exo 2';src:url(fonts/Exo2-Regular.ttf) format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Exo 2';src:url(fonts/Exo2-Medium.ttf) format('truetype');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Exo 2';src:url(fonts/Exo2-SemiBold.ttf) format('truetype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Exo 2';src:url(fonts/Exo2-Bold.ttf) format('truetype');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Exo 2 Condensed';src:url(fonts/Exo2-LightCondensed.otf) format('opentype');font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:'Exo 2 Condensed';src:url(fonts/Exo2-RegularCondensed.otf) format('opentype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Exo 2 Condensed';src:url(fonts/Exo2-SemiBoldCondensed.otf) format('opentype');font-weight:600;font-style:normal;font-display:swap}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 'Exo 2',system-ui,-apple-system,'Segoe UI',sans-serif;font-variant-numeric:tabular-nums}
 #app{max-width:1280px;margin:0 auto;padding:12px 14px 100px}
 button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer;border:0;background:none;padding:0;text-align:left}
@@ -44,7 +52,7 @@ small,.mut{color:var(--mut);font-size:12px}.pos{color:var(--pos)}.neg{color:var(
 @media(min-width:1080px){
  .side{display:flex;flex-direction:column;align-items:center;gap:10px;position:fixed;left:14px;top:12px;bottom:12px;width:132px;padding:16px 8px;border-radius:28px;background:var(--card);color:var(--ink);overflow-y:auto;z-index:3}
  #app{max-width:none;margin:0 14px 0 162px}
- .sbrand{font-size:13px;letter-spacing:.04em;text-align:center;line-height:1.25;margin-bottom:4px;text-transform:uppercase}
+ .sbrand{font-family:'Exo 2 Condensed','Exo 2',sans-serif;font-weight:600;font-size:14px;letter-spacing:.04em;text-align:center;line-height:1.25;margin-bottom:4px;text-transform:uppercase}
  .stt{margin:6px 0 0;font-weight:600;font-size:15px;align-self:flex-start;padding-left:10px}
  .sb{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;padding:4px 0;border-radius:16px;color:inherit}
  .sb i{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;font-size:30px;font-style:normal;background:linear-gradient(145deg,#a07bff,#6d4be0);box-shadow:0 6px 14px rgba(109,75,224,.38);transition:transform .15s}
